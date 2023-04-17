@@ -1,0 +1,1 @@
+export const OBTER_USUARIOS_API = "OBTER_USUARIOS_API";
