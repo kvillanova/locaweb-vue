@@ -1,0 +1,149 @@
+[
+    {
+        "titulo": "Hospedagem 1",
+        "preco": 0,
+        "preco_infos": [
+            "você não paga nada para usar",
+            "sem taxa de setup"
+        ],
+        "ideal": "Ideal para quem está começando.",
+        "topicos": [
+            {
+                "titulo": "Seu site em servidores <u>nos Estados Unidos.</u>",
+                "itens": [
+                    "Servidores em nossos data centers americanos;",
+                    "ASP, ASP.NET 2.0/3.0/3.5/ e 4.0/4.5/4.5.1/4.5.2 (medium trust) ou PHP 5.3, 5.4, 5.5, 5.6 e 7.0;",
+                    "1 usuário de FTP para upload ou download;",
+                    "1 conta de e-mail profissional;",
+                    "<u>1 subdomínio</u> gratuito;"
+                ]
+            },
+            {
+                "titulo": "Suporte 24 horas, 7 dias por semana grátis;",
+                "itens": []
+            },
+            {
+                "titulo": "Aplicativos disponíveis;",
+                "itens": [
+                    "Wordpress;",
+                    "Drupal;",
+                    "entre outros..."
+                ]
+            },
+            {
+                "titulo": "Você ainda tem",
+                "itens": [
+                    "Webmail RoundCube;",
+                    "AntiSpam;",
+                    "Painel de gerenciamento de DNS;",
+                    "Painel de controle web;",
+                    "Configurações de PHP personalizáveis;",
+                    "Certificado SSL Grátis;",
+                    "Transferência ilimitada."
+                ]
+            }
+        ]
+    },
+    {
+        "titulo": "Hospedagem 2",
+        "preco": 499,
+        "preco_infos": [
+            "cobrado mensalmente",
+            "sem taxa de setup"
+        ],
+        "ideal": "Ideal para site com mais de 30k de visitas.",
+        "topicos": [
+            {
+                "titulo": "Seu site em servidores <u>no Brasil.</u>",
+                "itens": [
+                    "Servidores em nosso datacenter de São Paulo;",
+                    "ASP, ASP.NET 2.0/3.0/3.5/ e 4.0/4.5/4.5.1/4.5.2 (medium trust) ou PHP 5.3, 5.4, 5.5, 5.6 e 7.0;",
+                    "10 usuários de FTP para upload ou download;",
+                    "30  contas de e-mail profissional;",
+                    "<u>10 subdomínios</u> gratuitos;"
+                ]
+            },
+            {
+                "titulo": "Suporte 24 horas, 7 dias por semana grátis;",
+                "itens": []
+            },
+            {
+                "titulo": "Aplicativos disponíveis;",
+                "itens": [
+                    "Wordpress;",
+                    "Drupal;",
+                    "entre outros..."
+                ]
+            },
+            {
+                "titulo": "Migração Gratuita;",
+                "itens": [
+                    "Migramos todos seus sites para nossos servidores;"
+                ]
+            },
+            {
+                "titulo": "Você ainda tem",
+                "itens": [
+                    "Webmail RoundCube;",
+                    "AntiSpam;",
+                    "Painel de gerenciamento de DNS;",
+                    "Painel de controle web;",
+                    "Configurações de PHP personalizáveis;",
+                    "Certificado SSL Grátis;",
+                    "Transferência ilimitada."
+                ]
+            }
+        ]
+    },
+    {
+        "titulo": "Hospedagem 3",
+        "preco": 999,
+        "preco_infos": [
+            "cobrado mensalmente",
+            "sem taxa de setup"
+        ],
+        "ideal": "Ideal para site com mais de 60k de visitas.",
+        "topicos": [
+            {
+                "titulo": "Seu site em servidores <u>no Brasil.</u>",
+                "itens": [
+                    "Servidores em nosso datacenter de São Paulo;",
+                    "ASP, ASP.NET 2.0/3.0/3.5/ e 4.0/4.5/4.5.1/4.5.2 (medium trust) ou PHP 5.3, 5.4, 5.5, 5.6 e 7.0;",
+                    "<u>Ilimitados</u> usuários de FTP para upload ou download;",
+                    "<u>Ilimitadas</u> contas de e-mail profissional;",
+                    "<u>50 subdomínios</u> gratuitos;"
+                ]
+            },
+            {
+                "titulo": "Suporte 24 horas, 7 dias por semana grátis;",
+                "itens": []
+            },
+            {
+                "titulo": "Aplicativos disponíveis;",
+                "itens": [
+                    "Wordpress;",
+                    "Drupal;",
+                    "entre outros..."
+                ]
+            },
+            {
+                "titulo": "Migração Gratuita;",
+                "itens": [
+                    "Migramos todos seus sites para nossos servidores;"
+                ]
+            },
+            {
+                "titulo": "Você ainda tem",
+                "itens": [
+                    "Webmail RoundCube;",
+                    "AntiSpam;",
+                    "Painel de gerenciamento de DNS;",
+                    "Painel de controle web;",
+                    "Configurações de PHP personalizáveis;",
+                    "Certificado SSL Grátis;",
+                    "Transferência ilimitada."
+                ]
+            }
+        ]
+    }
+]
