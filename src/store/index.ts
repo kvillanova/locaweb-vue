@@ -1,13 +1,13 @@
 import { Store, createStore, useStore as vuexUseStore } from 'vuex';
 import http from '@/http';
-import IUsuario from '@/interfaces/IUsuario';
+import IUsuario, { IUsuarioLogado } from '@/interfaces/IUsuario';
 import { OBTER_USUARIOS_API } from './action-types';
-import { OBTER_USUARIOS } from './mutation-types';
+import { OBTER_USUARIOS, SELECIONAR_PLANO } from './mutation-types';
 import { InjectionKey } from 'vue';
 
 interface Estado {
   usuarios: IUsuario[],
-  usuarioLogado: IUsuario | null,
+  usuarioLogado: IUsuarioLogado | null,
   planoSelecionado: number | null,
   nomeSite: string | null
 }
@@ -24,7 +24,9 @@ export const store = createStore<Estado>({
   mutations: {
     [OBTER_USUARIOS](state, usuarios: IUsuario[]): void {
       state.usuarios = usuarios;
-      console.log(state.usuarios);
+    },
+    [SELECIONAR_PLANO](state, plano: number): void {
+      state.planoSelecionado = plano;
     }
   },
   actions: {
