@@ -17,7 +17,7 @@
             <CampoForm
                 class="form__campo"
                 v-model="senha"
-                id="email"
+                id="senha"
                 label="Senha"
                 type="password"
                 placeholder="Sua senha"
@@ -56,21 +56,25 @@ export default defineComponent({
     flex-direction: column;
     background: #FFFFFF;
     border: 1px solid #E6EAF2;
-    width: calc(100vw - 10px);
+    width: calc(100vw - 20px);
     max-width: 617px;
     padding: 30px;
     margin: 20px auto;
-    align-items: start;
+    align-items: flex-start;
+    text-align: left;
+    box-sizing: border-box;
 
     &__titulo {
         font-size: 1.5rem;
         margin: 0;
+        width: 100%;
     }
 
     &__subtitulo {
         font-size: 1rem;
         font-weight: 400;
         margin-top: 8px;
+        width: 100%;
     }
 }
 
@@ -80,7 +84,7 @@ export default defineComponent({
     flex-direction: column;
 
     &__esqueci-senha {
-        align-self: end;
+        align-self: flex-end;
         color: #515D74;
         font-size: .9rem;
         line-height: 20px;

@@ -49,7 +49,7 @@ export default defineComponent({
 .campo {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     width: 100%;
 
     &__label {

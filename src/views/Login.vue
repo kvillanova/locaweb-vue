@@ -5,7 +5,8 @@
     alt="Locaweb"
   >
   <FormularioLogin />
-  <p class="nao-tem-conta">Ainda não tem conta? <RouterLink
+  <p class="nao-tem-conta">Ainda não tem conta?
+    <RouterLink
       class="nao-tem-conta__link"
       to="cadastro"
     >Cadastre-se</RouterLink>
@@ -24,12 +25,14 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .nao-tem-conta {
-  align-self: center;
-  margin-top: 32px;
+  text-align: center;
+  margin: 32px auto 0;
+  max-width: calc(100vw - 20px);
 
   &__link {
     color: #F30168;
     text-decoration: underline;
+    word-wrap: break-word;
   }
 }
 </style>
