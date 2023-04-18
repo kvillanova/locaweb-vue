@@ -10,8 +10,13 @@
             :type="type"
             :placeholder="placeholder"
             :value="modelValue"
+            :required="required"
             @input="$event => $emit('update:modelValue', ($event.target as HTMLInputElement).value)"
         />
+        <p
+            class="campo__sub-info"
+            v-if="subinfo"
+        >{{ subinfo }}</p>
     </div>
 </template>
 
@@ -40,8 +45,16 @@ export default defineComponent({
         placeholder: {
             type: String,
             required: false
+        },
+        subinfo: {
+            type: String,
+            required: false
+        },
+        required: {
+            type: Boolean,
+            default: false
         }
-    },
+    }
 });
 </script>
 
@@ -64,6 +77,12 @@ export default defineComponent({
         border: 1px solid rgba(81, 93, 116, 0.5);
         border-radius: 5px;
         font-size: 1.1rem;
+    }
+
+    &__sub-info {
+        font-size: .8rem;
+        margin: 0;
+        color: #515D74;
     }
 }
 </style>
