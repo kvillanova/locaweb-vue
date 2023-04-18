@@ -22,6 +22,7 @@
                 label="Celular"
                 type="text"
                 placeholder="(99) 99999-0000"
+                :required="true"
             />
             <CampoForm
                 class="form__campo"
@@ -30,6 +31,7 @@
                 label="E-mail"
                 type="email"
                 placeholder="Informe seu e-mail"
+                :required="true"
             />
             <CampoForm
                 class="form__campo"
@@ -38,6 +40,9 @@
                 label="Senha"
                 type="password"
                 subinfo="No mínimo 8 caracteres"
+                :required="true"
+                pattern=".{8,}"
+                @update:model-value="checarSenhas"
             />
             <CampoForm
                 class="form__campo"
@@ -45,6 +50,10 @@
                 id="confirmar-senha"
                 label="Confirme sua senha"
                 type="password"
+                :required="true"
+                pattern=".{8,}"
+                :erro-customizado="erroSenhas"
+                @update:model-value="checarSenhas"
             />
             <h2 class="caixa-form__titulo caixa-form__titulo-adicional">Dados do seu site</h2>
             <CampoForm
@@ -54,6 +63,7 @@
                 label="Nome do seu site"
                 type="text"
                 placeholder="Meu site"
+                :required="true"
             />
             <div class="aceitar-termos">
                 <input
@@ -61,6 +71,7 @@
                     id="aceitar-termos"
                     class="aceitar-termos__checkbox"
                     type="checkbox"
+                    :required="true"
                 >
                 <label
                     for="aceitar-termos"
@@ -93,9 +104,15 @@ export default defineComponent({
         const senha = ref('');
         const confirmarSenha = ref('');
         const nomeSite = ref('');
+        const erroSenhas = ref('');
         const aceitarTermos = ref(false);
         const salvar = (e: Event) => {
-            console.log('salvo');
+            checarSenhas();
+            console.log(nome.value);
+        };
+        const checarSenhas = () => {
+            if (senha.value === confirmarSenha.value) return erroSenhas.value = '';
+            return erroSenhas.value = 'As senhas devem ser idênticas.';
         };
         return {
             nome,
@@ -105,6 +122,8 @@ export default defineComponent({
             confirmarSenha,
             nomeSite,
             aceitarTermos,
+            erroSenhas,
+            checarSenhas,
             salvar
         };
     }
