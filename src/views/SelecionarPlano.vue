@@ -1,15 +1,7 @@
 <template>
-  <header>
-    <img
-      class="locaweb-logo"
-      src="@/assets/logo.svg"
-      alt="Locaweb"
-    >
-    <h2 class="titulo">
-      Você está muito próximo de mudar a forma de <span class="titulo__destaque">hospedar seu site</span>
-    </h2>
+  <HeaderCadastro>
     <p>Escolha seu plano</p>
-  </header>
+  </HeaderCadastro>
   <div class="planos">
     <Plano
       v-for="(j, index) in json"
@@ -29,11 +21,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Plano from '@/components/Plano.vue';
+import HeaderCadastro from '@/components/HeaderCadastro.vue';
 import json from '@/assets/planos.json';
 
 export default defineComponent({
   name: 'SelecionarPlano',
-  components: { Plano },
+  components: { Plano, HeaderCadastro },
   data() {
     return { json };
   }
