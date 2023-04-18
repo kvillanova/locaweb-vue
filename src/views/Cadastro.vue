@@ -1,12 +1,16 @@
 <template>
-  <img class="locaweb-logo" src="@/assets/logo.svg" alt="Locaweb">
+  <HeaderCadastro />
+  <FormularioCadastro />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import FormularioCadastro from '@/components/FormularioCadastro.vue';
+import HeaderCadastro from '@/components/HeaderCadastro.vue';
 
 export default defineComponent({
-  name: 'Cadastro'
+  name: 'Cadastro',
+  components: { FormularioCadastro, HeaderCadastro }
 });
 </script>
 
