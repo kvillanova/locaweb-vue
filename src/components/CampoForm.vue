@@ -11,17 +11,25 @@
             :placeholder="placeholder"
             :value="modelValue"
             :required="required"
-            @input="$event => $emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+            :pattern="pattern"
+            @input="e => $emit('update:modelValue', (e.target as HTMLInputElement).value)"
+            @invalid.prevent="(e) => checarValidacoes((e.target as HTMLInputElement).validity)"
+            @blur="(e) => checarValidacoes((e.target as HTMLInputElement).validity)"
         />
         <p
             class="campo__sub-info"
             v-if="subinfo"
         >{{ subinfo }}</p>
+        <p
+            class="campo__erro"
+            :id="`${id}-erro`"
+            v-if="erro"
+        >{{ erro }}</p>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
     name: "CampoForm",
@@ -30,6 +38,9 @@ export default defineComponent({
         type: {
             type: String,
             required: true,
+        },
+        pattern: {
+            type: String
         },
         label: {
             type: String,
@@ -53,7 +64,23 @@ export default defineComponent({
         required: {
             type: Boolean,
             default: false
+        },
+        erroCustomizado: {
+            type: String
         }
+    }, setup(props) {
+        const erro = ref('');
+        const checarValidacoes = (validityState: ValidityState) => {
+            if (validityState.valueMissing) return erro.value = 'Esse campo não pode ser deixado vazio.';
+            if (!validityState.valid) return erro.value = 'Preencha esse campo corretamente.';
+            if (props.erroCustomizado) return erro.value = props.erroCustomizado;
+            if (validityState.valid) return erro.value = '';
+        };
+
+        return {
+            checarValidacoes,
+            erro
+        };
     }
 });
 </script>
@@ -83,6 +110,12 @@ export default defineComponent({
         font-size: .8rem;
         margin: 0;
         color: #515D74;
+    }
+
+    &__erro {
+        color: #F44336;
+        font-size: .8rem;
+        margin: 0;
     }
 }
 </style>
