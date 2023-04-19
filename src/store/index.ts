@@ -46,7 +46,13 @@ export const store = createStore<Estado>({
     [ADICIONAR_USUARIO_API]: ({ commit }, usuario) => {
       http.post('users', {
         ...usuario
-      }).finally(() => commit(ADICIONAR_USUARIO, usuario));
+      }).finally(() => {
+        commit(ADICIONAR_USUARIO, usuario);
+        commit(LOGAR_USUARIO, {
+          name: usuario.name,
+          email: usuario.email
+        });
+      });
     }
   }
 });
