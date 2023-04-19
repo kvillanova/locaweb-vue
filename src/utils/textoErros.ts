@@ -13,7 +13,7 @@ interface Campos {
 const textoErros: Campos = {
     email: {
         vazio: 'O campo de e-mail precisa estar preenchido.',
-        invalido: 'Preencha o e-mail corretamente.'
+        invalido: 'Insira um e-mail válido.'
     },
     senha: {
         vazio: 'Sua senha precisa estar preenchida.',
@@ -23,7 +23,7 @@ const textoErros: Campos = {
     },
     nome: {
         vazio: 'Seu nome precisa estar preenchido.',
-        invalido: 'Preencha seu nome corretamente.'
+        invalido: 'Insira um nome válido.'
     },
     celular: {
         vazio: 'Seu celular precisa estar preenchido.',
