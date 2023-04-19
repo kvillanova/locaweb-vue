@@ -14,6 +14,7 @@
       :topicos="j.topicos"
       :mais_usado="j.titulo == 'Hospedagem 2' ? true : false"
       :show_escolher="true"
+      @aoEscolherPlano="selecionarPlano"
     />
   </div>
 </template>
@@ -23,12 +24,27 @@ import { defineComponent } from 'vue';
 import Plano from '@/components/Plano.vue';
 import HeaderCadastro from '@/components/HeaderCadastro.vue';
 import json from '@/assets/planos.json';
+import { useStore } from '@/store';
+import { SELECIONAR_PLANO } from '@/store/mutation-types';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'SelecionarPlano',
   components: { Plano, HeaderCadastro },
-  data() {
-    return { json };
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+    const selecionarPlano = (id: number) => {
+      console.log(id);
+      store.commit(SELECIONAR_PLANO, id);
+      router.push('/cadastro');
+    };
+
+    return {
+      json,
+      store,
+      selecionarPlano
+    };
   }
 });
 </script>
