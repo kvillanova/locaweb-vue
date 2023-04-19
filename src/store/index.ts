@@ -1,8 +1,8 @@
 import { Store, createStore, useStore as vuexUseStore } from 'vuex';
 import http from '@/http';
 import IUsuario, { IUsuarioLogado } from '@/interfaces/IUsuario';
-import { OBTER_USUARIOS_API } from './action-types';
-import { LOGAR_USUARIO, OBTER_USUARIOS, SELECIONAR_PLANO } from './mutation-types';
+import { ADICIONAR_USUARIO_API, OBTER_USUARIOS_API } from './action-types';
+import { ADICIONAR_USUARIO, LOGAR_USUARIO, OBTER_USUARIOS, SELECIONAR_PLANO } from './mutation-types';
 import { InjectionKey } from 'vue';
 
 interface Estado {
@@ -30,7 +30,10 @@ export const store = createStore<Estado>({
     },
     [LOGAR_USUARIO](state, usuarioLogado: IUsuarioLogado): void {
       state.usuarioLogado = usuarioLogado;
-    }
+    },
+    [ADICIONAR_USUARIO](state, usuario: IUsuario): void {
+      state.usuarios.push(usuario);
+    },
   },
   actions: {
     [OBTER_USUARIOS_API]: ({ state, commit }) => {
@@ -39,6 +42,11 @@ export const store = createStore<Estado>({
         .then(resp => {
           commit(OBTER_USUARIOS, resp.data);
         });
+    },
+    [ADICIONAR_USUARIO_API]: ({ commit }, usuario) => {
+      http.post('users', {
+        ...usuario
+      }).finally(() => commit(ADICIONAR_USUARIO, usuario));
     }
   }
 });
