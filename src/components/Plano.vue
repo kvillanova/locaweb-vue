@@ -4,6 +4,10 @@
             class="plano__mais-usado"
             v-if="mais_usado"
         >Mais Usado</div>
+        <div
+            class="plano__plano-escolhido"
+            v-if="plano_escolhido"
+        >Plano Escolhido</div>
         <h3 class="plano__titulo">{{ titulo }}</h3>
         <h2
             v-if="preco > 0"
@@ -21,21 +25,21 @@
         <h4 class="plano__ideal">{{ ideal }}</h4>
         <button
             class="plano__escolher"
-            v-if="show_escolher"
+            v-if="!plano_escolhido"
             @click="escolherPlano"
         >Escolher esse plano</button>
         <div
-            class="topico"
+            class="plano__topico"
             v-for="(topico, index) in topicos"
             :key="index"
         >
             <h4
-                class="topico__titulo"
+                class="plano__topico__titulo"
                 v-if="topico.titulo"
                 v-html="topico.titulo"
             />
             <p
-                class="topico__item"
+                class="plano__topico__item"
                 role="listitem"
                 v-for="(item, index) in topico.itens"
                 :key="index"
@@ -43,17 +47,20 @@
                 <Fa icon="fa-check" /> <span v-html="item"></span>
             </p>
         </div>
+        <button
+            class="plano__trocar"
+            v-if="plano_escolhido"
+            @click="trocarPlano"
+        >Trocar Plano</button>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useRouter } from 'vue-router';
-import { useStore } from "@/store";
-import { SELECIONAR_PLANO } from "@/store/mutation-types";
 
 export default defineComponent({
     name: "Plano",
+    emits: ["aoEscolherPlano", "aoTrocarPlano"],
     props: {
         titulo: {
             type: String,
@@ -74,26 +81,26 @@ export default defineComponent({
         },
         topicos: Object,
         mais_usado: Boolean,
-        show_escolher: Boolean
+        plano_escolhido: Boolean
     },
-    setup(props) {
-        const router = useRouter();
-        const store = useStore();
+    setup(props, { emit }) {
         const escolherPlano = () => {
-            store.commit(SELECIONAR_PLANO, props.plano_id);
-            router.push('/cadastro');
+            emit('aoEscolherPlano', props.plano_id);
+        };
+        const trocarPlano = () => {
+            emit('aoTrocarPlano');
         };
 
         return {
-            escolherPlano
+            escolherPlano,
+            trocarPlano
         };
     }
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .plano {
-    position: relative;
     box-sizing: border-box;
     width: 300px;
     padding: 30px;
@@ -104,16 +111,26 @@ export default defineComponent({
     border: 1px solid #E6EAF2;
     font-size: 1rem;
     color: #666;
+    margin: 0 auto;
 
-    &__mais-usado {
-        width: 100px;
-        background: #10C300;
+    &__mais-usado,
+    &__plano-escolhido {
         color: white;
         padding: 8px;
         margin: -42px auto 10px;
         text-transform: uppercase;
         border-radius: 10px;
         font-size: .8rem;
+    }
+
+    &__mais-usado {
+        width: 100px;
+        background: #10C300;
+    }
+
+    &__plano-escolhido {
+        width: 150px;
+        background: black;
     }
 
     p {
@@ -138,7 +155,6 @@ export default defineComponent({
         &__info {
             font-size: .8rem;
         }
-
     }
 
     &__ideal {
@@ -149,23 +165,33 @@ export default defineComponent({
         font-weight: 400;
     }
 
-    &__escolher {
+    &__escolher,
+    &__trocar {
         cursor: pointer;
         padding: 18px 24px;
-        background: #F30168;
         border-radius: 5px;
         text-transform: uppercase;
+    }
+
+    &__escolher {
+        background: #F30168;
         color: white;
         border: none;
     }
-}
 
-.topico {
-    text-align: left;
+    &__trocar {
+        background: white;
+        border: solid 1px #000;
+        color: black;
+    }
 
-    &__item {
-        &>span {
-            margin-left: 5px;
+    &__topico {
+        text-align: left;
+
+        &__item {
+            &>span {
+                margin-left: 5px;
+            }
         }
     }
 }
