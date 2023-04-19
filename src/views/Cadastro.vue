@@ -51,7 +51,7 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: top;
+  align-items: stretch;
   max-width: 980px;
   margin: 0 auto;
 

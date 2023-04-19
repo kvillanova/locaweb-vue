@@ -65,7 +65,7 @@ export default defineComponent({
 header {
   display: flex;
   justify-content: space-around;
-  align-items: start;
+  align-items: flex-start;
   padding: 10px 0;
 }
 
