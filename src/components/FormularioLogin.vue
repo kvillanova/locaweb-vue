@@ -80,6 +80,8 @@ export default defineComponent({
 
             if (senha.value !== usuario.password) return erroForm.value = 'A senha não corresponde ao usuário. Tente novamente.';
 
+            erroForm.value = '';
+
             const usuarioLogado: IUsuarioLogado = {
                 email: usuario.email,
                 name: usuario.name,
