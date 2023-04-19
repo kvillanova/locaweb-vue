@@ -35,7 +35,6 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
     const selecionarPlano = (id: number) => {
-      console.log(id);
       store.commit(SELECIONAR_PLANO, id);
       router.push('/cadastro');
     };
