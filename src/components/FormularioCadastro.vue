@@ -4,7 +4,7 @@
         <h3 class="caixa-form__subtitulo">Informe seus dados pessoais para acesso à sua conta</h3>
         <form
             class="caixa-form__form"
-            @submit.prevent="e => salvar(e)"
+            @submit.prevent="salvar"
         >
             <CampoForm
                 class="form__campo"
@@ -14,6 +14,8 @@
                 type="text"
                 placeholder="Informe seu nome completo"
                 :required="true"
+                @pegar-validacoes="(validacoes) => mostrarErro(validacoes, 'nome')"
+                :erro="erroNome"
             />
             <CampoForm
                 class="form__campo"
@@ -23,6 +25,8 @@
                 type="text"
                 placeholder="(99) 99999-0000"
                 :required="true"
+                @pegar-validacoes="(validacoes) => mostrarErro(validacoes, 'celular')"
+                :erro="erroCelular"
             />
             <CampoForm
                 class="form__campo"
@@ -32,6 +36,8 @@
                 type="email"
                 placeholder="Informe seu e-mail"
                 :required="true"
+                @pegar-validacoes="(validacoes) => mostrarErro(validacoes, 'email')"
+                :erro="erroEmail"
             />
             <CampoForm
                 class="form__campo"
@@ -42,7 +48,8 @@
                 subinfo="No mínimo 8 caracteres"
                 :required="true"
                 pattern=".{8,}"
-                @update:model-value="checarSenhas"
+                @pegar-validacoes="(validacoes) => { mostrarErro(validacoes, 'senha'); mostrarErro(validacoes, 'confirmarSenha') }"
+                :erro="erroSenha"
             />
             <CampoForm
                 class="form__campo"
@@ -52,8 +59,8 @@
                 type="password"
                 :required="true"
                 pattern=".{8,}"
-                :erro-customizado="erroSenhas"
-                @update:model-value="checarSenhas"
+                @pegar-validacoes="(validacoes) => mostrarErro(validacoes, 'confirmarSenha')"
+                :erro="erroConfirmarSenha"
             />
             <h2 class="caixa-form__titulo caixa-form__titulo-adicional">Dados do seu site</h2>
             <CampoForm
@@ -64,6 +71,8 @@
                 type="text"
                 placeholder="Meu site"
                 :required="true"
+                @pegar-validacoes="(validacoes) => mostrarErro(validacoes, 'site')"
+                :erro="erroNomeSite"
             />
             <div class="aceitar-termos">
                 <input
@@ -93,6 +102,7 @@
 import { defineComponent, ref } from 'vue';
 import CampoForm from '@/components/CampoForm.vue';
 import CaixaForm from '@/components/CaixaForm.vue';
+import textoErros from '@/utils/textoErros';
 
 export default defineComponent({
     name: "FormularioCadastro",
@@ -104,16 +114,47 @@ export default defineComponent({
         const senha = ref('');
         const confirmarSenha = ref('');
         const nomeSite = ref('');
-        const erroSenhas = ref('');
+
+        const erroNome = ref('');
+        const erroCelular = ref('');
+        const erroEmail = ref('');
+        const erroSenha = ref('');
+        const erroConfirmarSenha = ref('');
+        const erroNomeSite = ref('');
+
         const aceitarTermos = ref(false);
-        const salvar = (e: Event) => {
-            checarSenhas();
-            console.log(nome.value);
+
+        const mostrarErro = (validacoes: ValidityState, campoErro: string) => {
+            if (campoErro === 'email' && validacoes.valueMissing) return erroEmail.value = textoErros[campoErro].vazio;
+            if (campoErro === 'email' && !validacoes.valid) return erroEmail.value = textoErros[campoErro].invalido;
+            if (campoErro === 'email' && validacoes.valid) return erroEmail.value = '';
+
+            if (campoErro === 'senha' && validacoes.valueMissing) return erroSenha.value = textoErros[campoErro].vazio;
+            if (campoErro === 'senha' && !validacoes.valid) return erroSenha.value = textoErros[campoErro].invalido;
+            if (campoErro === 'senha' && validacoes.valid) return erroSenha.value = '';
+
+            if (campoErro === 'confirmarSenha' && senha.value !== confirmarSenha.value) return erroConfirmarSenha.value = textoErros.senha.identicas || '';
+            if (campoErro === 'confirmarSenha' && senha.value === confirmarSenha.value) return erroConfirmarSenha.value = '';
+
+            if (campoErro === 'nome' && validacoes.valueMissing) return erroNome.value = textoErros[campoErro].vazio;
+            if (campoErro === 'nome' && !validacoes.valid) return erroNome.value = textoErros[campoErro].invalido;
+            if (campoErro === 'nome' && validacoes.valid) return erroNome.value = '';
+
+            if (campoErro === 'celular' && validacoes.valueMissing) return erroCelular.value = textoErros[campoErro].vazio;
+            if (campoErro === 'celular' && !validacoes.valid) return erroCelular.value = textoErros[campoErro].invalido;
+            if (campoErro === 'celular' && validacoes.valid) return erroCelular.value = '';
+
+            if (campoErro === 'site' && validacoes.valueMissing) return erroNomeSite.value = textoErros[campoErro].vazio;
+            if (campoErro === 'site' && !validacoes.valid) return erroNomeSite.value = textoErros[campoErro].invalido;
+            if (campoErro === 'site' && validacoes.valid) return erroNomeSite.value = '';
         };
-        const checarSenhas = () => {
-            if (senha.value === confirmarSenha.value) return erroSenhas.value = '';
-            return erroSenhas.value = 'As senhas devem ser idênticas.';
+
+
+        const salvar = () => {
+            console.log('salvo');
         };
+
+
         return {
             nome,
             celular,
@@ -122,8 +163,13 @@ export default defineComponent({
             confirmarSenha,
             nomeSite,
             aceitarTermos,
-            erroSenhas,
-            checarSenhas,
+            erroNome,
+            erroCelular,
+            erroEmail,
+            erroSenha,
+            erroConfirmarSenha,
+            erroNomeSite,
+            mostrarErro,
             salvar
         };
     }
