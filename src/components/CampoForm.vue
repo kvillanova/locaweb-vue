@@ -13,8 +13,8 @@
             :required="required"
             :pattern="pattern"
             @input="e => $emit('update:modelValue', (e.target as HTMLInputElement).value)"
-            @invalid.prevent="(e) => checarValidacoes((e.target as HTMLInputElement).validity)"
-            @blur="(e) => checarValidacoes((e.target as HTMLInputElement).validity)"
+            @invalid.prevent="e => enviarValidacoes(e)"
+            @blur="e => enviarValidacoes(e)"
         />
         <p
             class="campo__sub-info"
@@ -29,11 +29,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
     name: "CampoForm",
-    emits: ["update:modelValue"],
+    emits: ["update:modelValue", "pegarValidacoes"],
     props: {
         type: {
             type: String,
@@ -65,21 +65,17 @@ export default defineComponent({
             type: Boolean,
             default: false
         },
-        erroCustomizado: {
-            type: String
+        erro: {
+            type: String,
+            default: ''
         }
-    }, setup(props) {
-        const erro = ref('');
-        const checarValidacoes = (validityState: ValidityState) => {
-            if (validityState.valueMissing) return erro.value = 'Esse campo não pode ser deixado vazio.';
-            if (!validityState.valid) return erro.value = 'Preencha esse campo corretamente.';
-            if (props.erroCustomizado) return erro.value = props.erroCustomizado;
-            if (validityState.valid) return erro.value = '';
+    }, setup(props, { emit }) {
+        const enviarValidacoes = (e: Event): void => {
+            emit("pegarValidacoes", (e.target as HTMLInputElement).validity);
         };
 
         return {
-            checarValidacoes,
-            erro
+            enviarValidacoes
         };
     }
 });
