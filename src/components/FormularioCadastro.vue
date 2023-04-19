@@ -112,6 +112,7 @@ import IUsuario from '@/interfaces/IUsuario';
 import { useStore } from '@/store';
 import { useRouter } from 'vue-router';
 import { OBTER_USUARIOS_API, ADICIONAR_USUARIO_API } from '@/store/action-types';
+import { LOGAR_USUARIO } from '@/store/mutation-types';
 
 export default defineComponent({
     name: "FormularioCadastro",
@@ -192,6 +193,7 @@ export default defineComponent({
             };
 
             store.dispatch(ADICIONAR_USUARIO_API, usuario).then(() => {
+                store.commit(LOGAR_USUARIO, { name: usuario.name, email: usuario.email });
                 router.push('/');
             });
         };
