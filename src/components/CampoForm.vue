@@ -12,7 +12,7 @@
             :value="modelValue"
             :required="required"
             :pattern="pattern"
-            @input="e => $emit('update:modelValue', (e.target as HTMLInputElement).value)"
+            @input="e => { $emit('update:modelValue', (e.target as HTMLInputElement).value); enviarValidacoes(e) }"
             @invalid.prevent="e => enviarValidacoes(e)"
             @blur="e => enviarValidacoes(e)"
         />
