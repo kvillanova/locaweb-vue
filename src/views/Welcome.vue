@@ -22,7 +22,7 @@
     </div>
   </header>
   <main class="main">
-    <h2 class="main__titulo">Olá João,</h2>
+    <h2 class="main__titulo">Olá {{ usuario?.name.firstname }},</h2>
     <h3 class="main__subtitulo">Seja bem-vindo à sua conta de hospedagem.</h3>
     <iframe
       class="main__video"
