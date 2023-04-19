@@ -103,7 +103,7 @@
 </template>
   
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref } from 'vue';
 import CampoForm from '@/components/CampoForm.vue';
 import CaixaForm from '@/components/CaixaForm.vue';
 import textoErros from '@/utils/textoErros';
