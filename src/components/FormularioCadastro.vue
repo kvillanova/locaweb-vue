@@ -16,6 +16,7 @@
                 :required="true"
                 @pegar-validacoes="(validacoes) => mostrarErro(validacoes, 'nome')"
                 :erro="erroNome"
+                :pattern="nomeRegex"
             />
             <CampoForm
                 class="form__campo"
@@ -80,7 +81,6 @@
                     id="aceitar-termos"
                     class="aceitar-termos__checkbox"
                     type="checkbox"
-                    :required="true"
                 >
                 <label
                     for="aceitar-termos"
@@ -94,15 +94,24 @@
                 </label>
             </div>
             <button class="caixa-form__botao">Criar conta</button>
+            <p
+                class="form__erro"
+                v-if="erroForm"
+            >{{ erroForm }}</p>
         </form>
     </CaixaForm>
 </template>
   
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import CampoForm from '@/components/CampoForm.vue';
 import CaixaForm from '@/components/CaixaForm.vue';
 import textoErros from '@/utils/textoErros';
+import XRegExp from 'xregexp';
+import IUsuario from '@/interfaces/IUsuario';
+import { useStore } from '@/store';
+import { useRouter } from 'vue-router';
+import { OBTER_USUARIOS_API, ADICIONAR_USUARIO_API } from '@/store/action-types';
 
 export default defineComponent({
     name: "FormularioCadastro",
@@ -121,8 +130,17 @@ export default defineComponent({
         const erroSenha = ref('');
         const erroConfirmarSenha = ref('');
         const erroNomeSite = ref('');
+        const erroForm = ref('');
+
+        const store = useStore();
+        const router = useRouter();
+        store.dispatch(OBTER_USUARIOS_API);
 
         const aceitarTermos = ref(false);
+
+        const nomeRegex = XRegExp('\\p{Latin}{2,}\\s\\p{Latin}{1,}(\\s\\p{Latin}{1,})*');
+        let nomeRegexText = nomeRegex.toString();
+        nomeRegexText = nomeRegexText.replace(/^\/(.*)\/$/, '$1');
 
         const mostrarErro = (validacoes: ValidityState, campoErro: string) => {
             if (campoErro === 'email' && validacoes.valueMissing) return erroEmail.value = textoErros[campoErro].vazio;
@@ -151,7 +169,31 @@ export default defineComponent({
 
 
         const salvar = () => {
-            console.log('salvo');
+            if (senha.value !== confirmarSenha.value) return false;
+
+            if (!aceitarTermos.value) return erroForm.value = 'Você precisa aceitar os termos antes de continuar.';
+            else erroForm.value = '';
+
+            const usuarios = store.state.usuarios;
+            const usuarioExiste = usuarios.find(u => u.email === email.value);
+            if (usuarioExiste) return erroForm.value = 'E-mail já cadastrado no sistema. Tente novamente.';
+
+            const [firstname, ...lastname] = nome.value.split(' ');
+            const name: IUsuario['name'] = {
+                firstname,
+                lastname: lastname.join(' ')
+            };
+
+            const usuario: IUsuario = {
+                email: email.value,
+                name,
+                tel: celular.value,
+                password: senha.value,
+            };
+
+            store.dispatch(ADICIONAR_USUARIO_API, usuario).then(() => {
+                router.push('/');
+            });
         };
 
 
@@ -170,6 +212,8 @@ export default defineComponent({
             erroConfirmarSenha,
             erroNomeSite,
             mostrarErro,
+            erroForm,
+            nomeRegex: nomeRegexText,
             salvar
         };
     }
@@ -201,5 +245,11 @@ export default defineComponent({
             margin-left: 5px;
         }
     }
+}
+
+.form__erro {
+    margin: 0;
+    color: red;
+    font-size: .9rem;
 }
 </style>
