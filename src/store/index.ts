@@ -2,7 +2,7 @@ import { Store, createStore, useStore as vuexUseStore } from 'vuex';
 import http from '@/http';
 import IUsuario, { IUsuarioLogado } from '@/interfaces/IUsuario';
 import { OBTER_USUARIOS_API } from './action-types';
-import { OBTER_USUARIOS, SELECIONAR_PLANO } from './mutation-types';
+import { LOGAR_USUARIO, OBTER_USUARIOS, SELECIONAR_PLANO } from './mutation-types';
 import { InjectionKey } from 'vue';
 
 interface Estado {
@@ -27,6 +27,9 @@ export const store = createStore<Estado>({
     },
     [SELECIONAR_PLANO](state, plano: number): void {
       state.planoSelecionado = plano;
+    },
+    [LOGAR_USUARIO](state, usuarioLogado: IUsuarioLogado): void {
+      state.usuarioLogado = usuarioLogado;
     }
   },
   actions: {
