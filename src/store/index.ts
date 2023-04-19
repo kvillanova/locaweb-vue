@@ -48,10 +48,6 @@ export const store = createStore<Estado>({
         ...usuario
       }).finally(() => {
         commit(ADICIONAR_USUARIO, usuario);
-        commit(LOGAR_USUARIO, {
-          name: usuario.name,
-          email: usuario.email
-        });
       });
     }
   }
